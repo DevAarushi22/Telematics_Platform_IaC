@@ -69,3 +69,14 @@ module aks './modules/aks.bicep' = {
     logAnalyticsWorkspaceId: monitoring.outputs.workspaceId
   }
 }
+
+module roleAssignments './modules/roleassignments.bicep' = {
+  name: 'roleAssignments'
+  scope: rg
+
+  params: {
+    principalId: aks.outputs.kubeletIdentity.principalId
+    acrName: acrName
+    keyVaultName: keyVaultName
+  }
+}
