@@ -2,17 +2,19 @@
 param principalId string
 
 @description('ACR Name')
-param acrName string
+param acrId string
 
 @description('Key Vault Name')
-param keyVaultName string
+param keyVaultId string
 
 resource acr 'Microsoft.ContainerRegistry/registries@2023-07-01' existing = {
-  name: acrName
+  scope: resourceGroup()
+  name: last(split(acrId, '/'))
 }
 
 resource keyVault 'Microsoft.KeyVault/vaults@2023-07-01' existing = {
-  name: keyVaultName
+  scope: resourceGroup()
+  name: last(split(keyVaultId, '/'))
 }
 
 resource acrPullRoleAssignment 'Microsoft.Authorization/roleAssignments@2022-04-01' = {

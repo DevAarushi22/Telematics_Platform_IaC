@@ -20,8 +20,7 @@ param serviceCidr = '10.0.0.0/16'
 param dnsServiceIP = '10.0.0.10'
 param podCidr = '10.244.0.0/16'
 
-param acrName = 'telematicsplatform'
-
+param acrName = 'telematicsdevacr'
 param keyVaultName = 'telematics-dev-kv'
 
 param systemNodePool = {
@@ -30,10 +29,12 @@ param systemNodePool = {
   mode: 'System'
   minCount: 1
   maxCount: 1
-  enableAutoScaling: false
+  enableAutoScaling: true
   osDiskSizeGB: 128
   osDiskType: 'Managed'
-  availabilityZones: []
+  availabilityZones: [
+    '1'
+  ]
 }
 
 param userNodePool = null

@@ -16,12 +16,11 @@ param networkPlugin = 'azure'
 param networkPluginMode = 'overlay'
 param networkPolicy = 'none'
 
-param serviceCidr = '10.0.0.0/16'
-param dnsServiceIP = '10.0.0.10'
-param podCidr = '10.244.0.0/16'
+param serviceCidr = '10.1.0.0/16'
+param dnsServiceIP = '10.1.0.10'
+param podCidr = '10.245.0.0/16'
 
-param acrName = 'telematicsplatform'
-
+param acrName = 'telematicsstageacr'
 param keyVaultName = 'telematics-stage-kv'
 
 param systemNodePool = {

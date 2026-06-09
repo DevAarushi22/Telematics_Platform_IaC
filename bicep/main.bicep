@@ -46,6 +46,26 @@ module monitoring './modules/monitoring.bicep' = {
   }
 }
 
+module acr './modules/acr.bicep' = {
+  name: 'acr'
+  scope: rg
+
+  params: {
+    acrName: acrName
+    location: location
+  }
+}
+
+module keyVault './modules/keyvault.bicep' = {
+  name: 'keyVault'
+  scope: rg
+
+  params: {
+    keyVaultName: keyVaultName
+    location: location
+  }
+}
+
 module aks './modules/aks.bicep' = {
   name: 'aks'
   scope: rg
@@ -76,7 +96,7 @@ module roleAssignments './modules/roleassignments.bicep' = {
 
   params: {
     principalId: aks.outputs.kubeletIdentity.principalId
-    acrName: acrName
-    keyVaultName: keyVaultName
+    acrId: acr.outputs.acrId
+    keyVaultId: keyVault.outputs.keyVaultId
   }
 }
