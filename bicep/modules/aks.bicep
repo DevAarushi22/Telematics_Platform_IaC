@@ -54,6 +54,7 @@ resource aksCluster 'Microsoft.ContainerService/managedClusters@2024-05-01' = {
 
     autoUpgradeProfile: {
       upgradeChannel: 'stable'
+      nodeOSUpgradeChannel: 'NodeImage'
     }
 
     networkProfile: {

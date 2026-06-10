@@ -1,16 +1,16 @@
 using '../main.bicep'
 
-param environment = 'stage'
+// param environment = 'stage'
 
 param location = 'centralindia'
 
-param resourceGroupName = 'telematics-stage-rg'
+param resourceGroupName = 'telematicsrgstgcin01'
 
-param clusterName = 'Telematics_Stage_AKS'
+param clusterName = 'telematicsaksstgcin01'
 
-param dnsPrefix = 'TelematicsStage'
+param dnsPrefix = 'telematicsstgcin01'
 
-param kubernetesVersion = '1.35.4'
+param kubernetesVersion = '1.35.5'
 
 param networkPlugin = 'azure'
 param networkPluginMode = 'overlay'
@@ -20,8 +20,9 @@ param serviceCidr = '10.1.0.0/16'
 param dnsServiceIP = '10.1.0.10'
 param podCidr = '10.245.0.0/16'
 
-param acrName = 'telematicsstageacr'
-param keyVaultName = 'telematics-stage-kv'
+param acrName = 'telematicsacrstgcin01'
+param keyVaultName = 'telematicskvstgcin01'
+param logAnalyticsWorkspaceName = 'telematicslawstgcin01'
 
 param systemNodePool = {
   name: 'agentpool'

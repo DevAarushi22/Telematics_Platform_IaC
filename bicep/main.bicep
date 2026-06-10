@@ -1,8 +1,5 @@
 targetScope = 'subscription'
 
-@description('Environment name')
-param environment string
-
 @description('Azure location')
 param location string
 
@@ -28,6 +25,7 @@ param podCidr string
 
 param acrName string
 param keyVaultName string
+param logAnalyticsWorkspaceName string
 
 param systemNodePool object
 param userNodePool object?
@@ -42,7 +40,7 @@ module monitoring './modules/monitoring.bicep' = {
   scope: rg
   params: {
     location: location
-    environment: environment
+    logAnalyticsWorkspaceName: logAnalyticsWorkspaceName
   }
 }
 
@@ -95,7 +93,7 @@ module roleAssignments './modules/roleassignments.bicep' = {
   scope: rg
 
   params: {
-    principalId: aks.outputs.kubeletIdentity.principalId
+    principalId: aks.outputs.kubeletIdentity.objectId
     acrId: acr.outputs.acrId
     keyVaultId: keyVault.outputs.keyVaultId
   }
