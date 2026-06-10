@@ -1,3 +1,6 @@
+@description('AKS subnet resource ID')
+param aksSubnetId string
+
 @description('Azure region')
 param location string
 
@@ -86,6 +89,8 @@ resource aksCluster 'Microsoft.ContainerService/managedClusters@2024-05-01' = {
 
         availabilityZones: systemNodePool.availabilityZones
 
+        vnetSubnetID: aksSubnetId
+
         type: 'VirtualMachineScaleSets'
       }
     ]
@@ -118,6 +123,7 @@ resource userPool 'Microsoft.ContainerService/managedClusters/agentPools@2024-05
     osDiskType: userNodePool!.osDiskType
 
     availabilityZones: userNodePool!.availabilityZones
+    vnetSubnetID: aksSubnetId
 
     type: 'VirtualMachineScaleSets'
   }

@@ -23,6 +23,15 @@ param serviceCidr string
 param dnsServiceIP string
 param podCidr string
 
+param vnetName string
+param vnetAddressSpace array
+
+param aksSubnetName string
+param aksSubnetPrefix string
+
+param ingressSubnetName string
+param ingressSubnetPrefix string
+
 param acrName string
 param keyVaultName string
 param logAnalyticsWorkspaceName string
@@ -64,6 +73,21 @@ module keyVault './modules/keyvault.bicep' = {
   }
 }
 
+module networking './modules/networking.bicep' = {
+  name: 'networking'
+  scope: resourceGroup(resourceGroupName)
+
+  params: {
+    location: location
+    vnetName: vnetName
+    vnetAddressSpace: vnetAddressSpace
+    aksSubnetName: aksSubnetName
+    aksSubnetPrefix: aksSubnetPrefix
+    ingressSubnetName: ingressSubnetName
+    ingressSubnetPrefix: ingressSubnetPrefix
+  }
+}
+
 module aks './modules/aks.bicep' = {
   name: 'aks'
   scope: rg
@@ -80,6 +104,8 @@ module aks './modules/aks.bicep' = {
     serviceCidr: serviceCidr
     dnsServiceIP: dnsServiceIP
     podCidr: podCidr
+
+    aksSubnetId: networking.outputs.aksSubnetId
 
     systemNodePool: systemNodePool
     userNodePool: userNodePool
