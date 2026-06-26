@@ -26,9 +26,14 @@ param userNodePool object?
 
 param logAnalyticsWorkspaceId string
 
+@description('Resource Tags')
+param tags object = {}
+
 resource aksCluster 'Microsoft.ContainerService/managedClusters@2024-05-01' = {
   name: clusterName
   location: location
+  tags: tags
+
   identity: {
     type: 'SystemAssigned'
   }
@@ -40,7 +45,6 @@ resource aksCluster 'Microsoft.ContainerService/managedClusters@2024-05-01' = {
 
   properties: {
     kubernetesVersion: kubernetesVersion
-
     dnsPrefix: dnsPrefix
 
     enableRBAC: true
@@ -123,6 +127,7 @@ resource userPool 'Microsoft.ContainerService/managedClusters/agentPools@2024-05
     osDiskType: userNodePool!.osDiskType
 
     availabilityZones: userNodePool!.availabilityZones
+
     vnetSubnetID: aksSubnetId
 
     type: 'VirtualMachineScaleSets'
@@ -131,3 +136,6 @@ resource userPool 'Microsoft.ContainerService/managedClusters/agentPools@2024-05
 
 output clusterName string = aksCluster.name
 output kubeletIdentity object = aksCluster.properties.identityProfile.kubeletidentity
+output fqdn string = aksCluster.properties.fqdn
+output nodeResourceGroup string = aksCluster.properties.nodeResourceGroup
+output oidcIssuer string = aksCluster.properties.oidcIssuerProfile.issuerURL

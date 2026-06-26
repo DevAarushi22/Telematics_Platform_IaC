@@ -19,9 +19,12 @@ param ingressSubnetName string
 @description('Ingress Subnet Prefix')
 param ingressSubnetPrefix string
 
+param tags object = {}
+
 resource vnet 'Microsoft.Network/virtualNetworks@2024-01-01' = {
   name: vnetName
   location: location
+  tags: tags
 
   properties: {
     addressSpace: {

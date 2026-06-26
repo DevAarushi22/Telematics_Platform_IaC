@@ -39,6 +39,8 @@ param logAnalyticsWorkspaceName string
 param systemNodePool object
 param userNodePool object?
 
+param tags object = {}
+
 resource rg 'Microsoft.Resources/resourceGroups@2024-03-01' = {
   name: resourceGroupName
   location: location

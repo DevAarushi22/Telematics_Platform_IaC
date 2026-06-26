@@ -26,16 +26,23 @@ param logAnalyticsWorkspaceName = 'telematicslawdevcin01'
 
 param systemNodePool = {
   name: 'agentpool'
-  vmSize: 'Standard_D2ds_v5'
+  vmSize: 'Standard_D4ds_v5'
   mode: 'System'
   minCount: 1
-  maxCount: 1
+  maxCount: 3
   enableAutoScaling: true
   osDiskSizeGB: 128
   osDiskType: 'Managed'
   availabilityZones: [
     '1'
   ]
+}
+
+param tags = {
+  Environment: 'Development'
+  Project: 'Telematics'
+  ManagedBy: 'Bicep'
+  Owner: 'DevOps'
 }
 
 param userNodePool = null
