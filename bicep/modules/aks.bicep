@@ -136,6 +136,7 @@ resource userPool 'Microsoft.ContainerService/managedClusters/agentPools@2024-05
 
 output clusterName string = aksCluster.name
 output kubeletIdentity object = aksCluster.properties.identityProfile.kubeletidentity
+output clusterPrincipalId string = aksCluster.identity.principalId
 output fqdn string = aksCluster.properties.fqdn
 output nodeResourceGroup string = aksCluster.properties.nodeResourceGroup
 output oidcIssuer string = aksCluster.properties.oidcIssuerProfile.issuerURL

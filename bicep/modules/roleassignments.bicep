@@ -7,6 +7,9 @@ param acrId string
 @description('Key Vault Name')
 param keyVaultId string
 
+param kubeletPrincipalId string
+param clusterPrincipalId string
+
 resource acr 'Microsoft.ContainerRegistry/registries@2023-07-01' existing = {
   scope: resourceGroup()
   name: last(split(acrId, '/'))
@@ -23,7 +26,7 @@ resource acrPullRoleAssignment 'Microsoft.Authorization/roleAssignments@2022-04-
   scope: acr
 
   properties: {
-    principalId: principalId
+    principalId: clusterPrincipalId
 
     roleDefinitionId: subscriptionResourceId(
       'Microsoft.Authorization/roleDefinitions',
@@ -47,6 +50,19 @@ resource keyVaultSecretsUserRole 'Microsoft.Authorization/roleAssignments@2022-0
       '4633458b-17de-408a-b874-0445c86b69e6'
     ) // Key Vault Secrets User
 
+    principalType: 'ServicePrincipal'
+  }
+}
+
+resource networkContributor 'Microsoft.Authorization/roleAssignments@2022-04-01' = {
+  name: guid(resourceGroup().id, principalId, 'NetworkContributor')
+  scope: resourceGroup()
+  properties: {
+    principalId: principalId
+    roleDefinitionId: subscriptionResourceId(
+      'Microsoft.Authorization/roleDefinitions',
+      '4d97b98b-1d4f-4787-a291-c67834d212e7'
+    )
     principalType: 'ServicePrincipal'
   }
 }

@@ -39,6 +39,8 @@ param logAnalyticsWorkspaceName string
 param systemNodePool object
 param userNodePool object?
 
+param ingressPublicIpName string
+
 param tags object = {}
 
 resource rg 'Microsoft.Resources/resourceGroups@2024-03-01' = {
@@ -90,6 +92,16 @@ module networking './modules/networking.bicep' = {
   }
 }
 
+module publicIp './modules/publicip.bicep' = {
+  name: 'publicIp'
+  scope: rg
+
+  params: {
+    publicIpName: ingressPublicIpName
+    location: location
+  }
+}
+
 module aks './modules/aks.bicep' = {
   name: 'aks'
   scope: rg
@@ -122,6 +134,8 @@ module roleAssignments './modules/roleassignments.bicep' = {
 
   params: {
     principalId: aks.outputs.kubeletIdentity.objectId
+    kubeletPrincipalId: aks.outputs.kubeletIdentity.objectId
+    clusterPrincipalId: aks.outputs.clusterPrincipalId
     acrId: acr.outputs.acrId
     keyVaultId: keyVault.outputs.keyVaultId
   }

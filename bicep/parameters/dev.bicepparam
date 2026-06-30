@@ -10,6 +10,8 @@ param clusterName = 'telematicsaksdevcin01'
 
 param dnsPrefix = 'telematicsdevcin01'
 
+param ingressPublicIpName = 'telematicsdevingresspipcin01'
+
 param kubernetesVersion = '1.35.5'
 
 param networkPlugin = 'azure'
@@ -26,13 +28,27 @@ param logAnalyticsWorkspaceName = 'telematicslawdevcin01'
 
 param systemNodePool = {
   name: 'agentpool'
-  vmSize: 'Standard_D4ds_v5'
+  vmSize: 'Standard_D4ads_v5'
   mode: 'System'
-  minCount: 1
-  maxCount: 3
   enableAutoScaling: true
-  osDiskSizeGB: 128
-  osDiskType: 'Managed'
+  minCount: 1
+  maxCount: 2
+  osDiskSizeGB: 150
+  osDiskType: 'Ephemeral'
+  availabilityZones: [
+    '1'
+  ]
+}
+
+param userNodePool = {
+  name: 'userpool'
+  vmSize: 'Standard_D2ads_v5'
+  mode: 'User'
+  enableAutoScaling: true
+  minCount: 1
+  maxCount: 2
+  osDiskSizeGB: 75
+  osDiskType: 'Ephemeral'
   availabilityZones: [
     '1'
   ]
@@ -44,8 +60,6 @@ param tags = {
   ManagedBy: 'Bicep'
   Owner: 'DevOps'
 }
-
-param userNodePool = null
 
 param vnetName = 'telematicsvnetdevcin01'
 
