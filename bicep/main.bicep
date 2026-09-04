@@ -36,6 +36,26 @@ param acrName string
 param keyVaultName string
 param logAnalyticsWorkspaceName string
 
+//eventhub
+@description('Event Hub namespace name')
+param eventHubNamespaceName string
+
+@description('Event Hub name')
+param eventHubName string
+
+param eventHubSkuName string
+param eventHubCapacity int
+param eventHubZoneRedundant bool
+param eventHubKafkaEnabled bool
+param eventHubAutoInflateEnabled bool
+param eventHubMaximumThroughputUnits int
+param eventHubMinimumTlsVersion string
+param eventHubPublicNetworkAccess string
+param eventHubDisableLocalAuth bool
+
+param eventHubPartitionCount int
+param eventHubMessageRetentionInDays int
+
 param systemNodePool object
 param userNodePool object?
 
@@ -74,6 +94,35 @@ module keyVault './modules/keyvault.bicep' = {
   params: {
     keyVaultName: keyVaultName
     location: location
+  }
+}
+
+module eventHub './modules/eventhub.bicep' = {
+  name: 'eventHub'
+  scope: rg
+
+  params: {
+    location: location
+
+    eventHubNamespaceName: eventHubNamespaceName
+    eventHubName: eventHubName
+
+    skuName: eventHubSkuName
+    capacity: eventHubCapacity
+
+    zoneRedundant: eventHubZoneRedundant
+    kafkaEnabled: eventHubKafkaEnabled
+    autoInflateEnabled: eventHubAutoInflateEnabled
+    maximumThroughputUnits: eventHubMaximumThroughputUnits
+
+    minimumTlsVersion: eventHubMinimumTlsVersion
+    publicNetworkAccess: eventHubPublicNetworkAccess
+    disableLocalAuth: eventHubDisableLocalAuth
+
+    partitionCount: eventHubPartitionCount
+    messageRetentionInDays: eventHubMessageRetentionInDays
+
+    tags: tags
   }
 }
 
