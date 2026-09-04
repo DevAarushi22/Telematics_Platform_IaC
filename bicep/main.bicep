@@ -56,6 +56,23 @@ param eventHubDisableLocalAuth bool
 param eventHubPartitionCount int
 param eventHubMessageRetentionInDays int
 
+//servicebus
+param serviceBusNamespaceName string
+param serviceBusSkuName string
+param serviceBusCapacity int
+param serviceBusZoneRedundant bool
+param serviceBusMinimumTlsVersion string
+param serviceBusPublicNetworkAccess string
+param serviceBusDisableLocalAuth bool
+param serviceBusPublicNetworkAccessIpAddressType string
+param serviceBusPremiumMessagingPartitions int
+
+param serviceBusQueues array
+param serviceBusTopics array
+param serviceBusSubscriptions array
+
+param serviceBusAuthorizationRuleName string
+
 param systemNodePool object
 param userNodePool object?
 
@@ -121,6 +138,33 @@ module eventHub './modules/eventhub.bicep' = {
 
     partitionCount: eventHubPartitionCount
     messageRetentionInDays: eventHubMessageRetentionInDays
+
+    tags: tags
+  }
+}
+
+module serviceBus './modules/servicebus.bicep' = {
+  name: 'serviceBus'
+  scope: rg
+
+  params: {
+    location: location
+
+    serviceBusNamespaceName: serviceBusNamespaceName
+    serviceBusSkuName: serviceBusSkuName
+    serviceBusCapacity: serviceBusCapacity
+    serviceBusZoneRedundant: serviceBusZoneRedundant
+    serviceBusMinimumTlsVersion: serviceBusMinimumTlsVersion
+    serviceBusPublicNetworkAccess: serviceBusPublicNetworkAccess
+    serviceBusDisableLocalAuth: serviceBusDisableLocalAuth
+    serviceBusPublicNetworkAccessIpAddressType: serviceBusPublicNetworkAccessIpAddressType
+    serviceBusPremiumMessagingPartitions: serviceBusPremiumMessagingPartitions
+
+    serviceBusQueues: serviceBusQueues
+    serviceBusTopics: serviceBusTopics
+    serviceBusSubscriptions: serviceBusSubscriptions
+
+    serviceBusAuthorizationRuleName: serviceBusAuthorizationRuleName
 
     tags: tags
   }

@@ -42,6 +42,91 @@ param eventHubDisableLocalAuth = false
 param eventHubPartitionCount = 32
 param eventHubMessageRetentionInDays = 1
 
+param serviceBusNamespaceName = 'telematicssbprodcin01'
+param serviceBusSkuName = 'Standard'
+param serviceBusCapacity = 0
+param serviceBusZoneRedundant = true
+param serviceBusMinimumTlsVersion = '1.2'
+param serviceBusPublicNetworkAccess = 'Enabled'
+param serviceBusDisableLocalAuth = false
+param serviceBusPublicNetworkAccessIpAddressType = 'IPv4'
+param serviceBusPremiumMessagingPartitions = 0
+
+param serviceBusAuthorizationRuleName = 'SASKeyTelematicsProd'
+
+param serviceBusQueues = [
+  {
+    name: 'email-notifications'
+    lockDuration: 'PT1M'
+    maxDeliveryCount: 10
+    maxSizeInMegabytes: 1024
+    defaultMessageTimeToLive: 'P14D'
+    maxMessageSizeInKilobytes: 256
+    requiresDuplicateDetection: false
+    requiresSession: false
+    enablePartitioning: false
+    enableExpress: false
+    enableBatchedOperations: true
+    deadLetteringOnMessageExpiration: false
+  }
+  {
+    name: 'inapp-notifications'
+    lockDuration: 'PT1M'
+    maxDeliveryCount: 10
+    maxSizeInMegabytes: 1024
+    defaultMessageTimeToLive: 'P14D'
+    maxMessageSizeInKilobytes: 256
+    requiresDuplicateDetection: false
+    requiresSession: false
+    enablePartitioning: false
+    enableExpress: false
+    enableBatchedOperations: true
+    deadLetteringOnMessageExpiration: false
+  }
+  {
+    name: 'push-notifications'
+    lockDuration: 'PT1M'
+    maxDeliveryCount: 10
+    maxSizeInMegabytes: 1024
+    defaultMessageTimeToLive: 'P14D'
+    maxMessageSizeInKilobytes: 256
+    requiresDuplicateDetection: false
+    requiresSession: false
+    enablePartitioning: false
+    enableExpress: false
+    enableBatchedOperations: true
+    deadLetteringOnMessageExpiration: false
+  }
+  {
+    name: 'report-requests'
+    lockDuration: 'PT1M'
+    maxDeliveryCount: 10
+    maxSizeInMegabytes: 1024
+    defaultMessageTimeToLive: 'P14D'
+    maxMessageSizeInKilobytes: 256
+    requiresDuplicateDetection: false
+    requiresSession: false
+    enablePartitioning: false
+    enableExpress: false
+    enableBatchedOperations: true
+    deadLetteringOnMessageExpiration: false
+  }
+  {
+    name: 'sms-notifications'
+    lockDuration: 'PT1M'
+    maxDeliveryCount: 10
+    maxSizeInMegabytes: 1024
+    defaultMessageTimeToLive: 'P14D'
+    maxMessageSizeInKilobytes: 256
+    requiresDuplicateDetection: false
+    requiresSession: false
+    enablePartitioning: false
+    enableExpress: false
+    enableBatchedOperations: true
+    deadLetteringOnMessageExpiration: false
+  }
+]
+
 param systemNodePool = {
   name: 'agentpool'
   vmSize: 'Standard_D4ads_v5'
