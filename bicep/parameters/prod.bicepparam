@@ -127,6 +127,33 @@ param serviceBusQueues = [
   }
 ]
 
+param serviceBusTopics = [
+  {
+    name: 'notification-events'
+    defaultMessageTimeToLive: 'P14D'
+    maxSizeInMegabytes: 1024
+    maxMessageSizeInKilobytes: 256
+    requiresDuplicateDetection: false
+    enablePartitioning: false
+    enableExpress: false
+    enableBatchedOperations: true
+    supportOrdering: false
+  }
+]
+
+param serviceBusSubscriptions = [
+  {
+    name: 'notification-orchestrator-sub'
+    topicName: 'notification-events'
+    lockDuration: 'PT1M'
+    maxDeliveryCount: 10
+    defaultMessageTimeToLive: 'P14D'
+    deadLetteringOnMessageExpiration: false
+    deadLetteringOnFilterEvaluationExceptions: false
+    requiresSession: false
+  }
+]
+
 param systemNodePool = {
   name: 'agentpool'
   vmSize: 'Standard_D4ads_v5'

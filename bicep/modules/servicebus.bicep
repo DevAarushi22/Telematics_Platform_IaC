@@ -106,7 +106,7 @@ resource topics 'Microsoft.ServiceBus/namespaces/topics@2024-01-01' = [
 
 resource subscriptions 'Microsoft.ServiceBus/namespaces/topics/subscriptions@2024-01-01' = [
   for subscription in serviceBusSubscriptions: {
-    parent: topics[indexOf(serviceBusTopics, first(serviceBusTopics, topic => topic.name == subscription.topicName))]
+    parent: topics[indexOf(serviceBusTopics, filter(serviceBusTopics, topic => topic.name == subscription.topicName)[0])]
     name: subscription.name
 
     properties: {
